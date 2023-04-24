@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Discord Web hook Send</title>
+  </head>
+  <body>
+    <input
+      type="text"
+      id="msg"
+      placeholder="Write Message.."
+      autocomplete="off"
+    /><br />
+    <button type="submit" id="btn" onclick="start()">send</button><br />
+  </body>
+  <script>
+    const { ipcRenderer } = require("electron");
+
+    function start() {
+      const msg = document.getElementById("msg").value;
+      const data = {
+        msg: msg,
+      };
+
+      if (msg) {
+        ipcRenderer.send("start", data);
+        document.getElementById("msg").value = "";
+      } else {
+        alert("Fail to Send a Message");
+      }
+    }
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        document.getElementById("btn").click();
+      }
+    });
+  </script>
+</html>
